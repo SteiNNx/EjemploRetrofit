@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_cartelera"
+            android:icon="@drawable/ic_menu_cartelera"
+            android:title="Cartelera" />
+        <item
+            android:id="@+id/menu_mis_entradas"
+            android:icon="@drawable/ic_menu_entradas"
+            android:title="Mis Entradas" />
+        <item
+            android:id="@+id/menu_ubicacion"
+            android:icon="@drawable/ic_menu_ubicacion"
+            android:title="Ubicacion" />
+    </group>
+
+    <item android:title="Informacion">
+        <menu>
+            <item
+                android:id="@+id/menu_acerca"
+                android:icon="@drawable/ic_menu_acerca"
+                android:title="Acerca" />
+        </menu>
+    </item>
+
+</menu>
