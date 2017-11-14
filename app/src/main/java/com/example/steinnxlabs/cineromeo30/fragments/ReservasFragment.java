@@ -10,13 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.steinnxlabs.cineromeo30.R;
-import com.example.steinnxlabs.cineromeo30.modelo.Pelicula;
-import com.example.steinnxlabs.cineromeo30.modelo.adapters.PeliculaAdapter;
+import com.example.steinnxlabs.cineromeo30.modelo.PeliculaReserva;
+import com.example.steinnxlabs.cineromeo30.modelo.SharedPreferences.SharedPreferences;
+import com.example.steinnxlabs.cineromeo30.modelo.adapters.ReservaAdapter;
 import com.example.steinnxlabs.cineromeo30.retrofit.IServices;
-import com.example.steinnxlabs.cineromeo30.retrofit.responses.PeliculaResponse;
+import com.example.steinnxlabs.cineromeo30.retrofit.responses.PeliculaReservaResponse;
 
 import java.util.List;
 
@@ -29,19 +29,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link CarteleraFragment.OnFragmentInteractionListener} interface
+ * {@link ReservasFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class CarteleraFragment extends Fragment {
+public class ReservasFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    //Componentes Creados y declaro Retrofit
-    private TextView tv_cartelera;
-    private RecyclerView rv_listarPeliculas;
-    private PeliculaAdapter peliculaAdapter;
+    private RecyclerView rv_listarReservas;
+    private ReservaAdapter reservaAdapter;
     private Retrofit retrofit;
 
-    public CarteleraFragment() {
+    public ReservasFragment() {
         // Required empty public constructor
     }
 
@@ -49,46 +47,41 @@ public class CarteleraFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.fragment_cartelera, container, false);
-        //Instancion Componentes
-        tv_cartelera= (TextView) view.findViewById(R.id.tv_cartelera_fragment);
-        rv_listarPeliculas = (RecyclerView) view.findViewById(R.id.rv_frag_cartelera);
-        //instacion adapter
-        peliculaAdapter = new PeliculaAdapter(getContext());
-        //le doy forma al reciclerView
-        rv_listarPeliculas.setAdapter(peliculaAdapter);
-        rv_listarPeliculas.setHasFixedSize(true);
-        final GridLayoutManager manager = new GridLayoutManager(container.getContext(),1);
-        rv_listarPeliculas.setLayoutManager(manager);
-        //instancion retrofit para usarlo
-        retrofit= new Retrofit.Builder()
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_reservas, container, false);
+        rv_listarReservas = (RecyclerView) view.findViewById(R.id.rv_frag_reservas);
+        reservaAdapter = new ReservaAdapter(getContext());
+        rv_listarReservas.setAdapter(reservaAdapter);
+        rv_listarReservas.setHasFixedSize(true);
+        final GridLayoutManager layoutManager = new GridLayoutManager(container.getContext(), 1);
+        rv_listarReservas.setLayoutManager(layoutManager);
+        retrofit = new Retrofit.Builder()
                 .baseUrl("http://kailalkalil.esy.es/webServices/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        //Lleno reciclerView con este metodo
-        llenarRecicler();
+        llenarReservasRecyclerView();
         return view;
     }
 
-    private void llenarRecicler() {
-        //se instancia el puente con el webservices
+    private void llenarReservasRecyclerView() {
         IServices services = retrofit.create(IServices.class);
-        //Realizo la llamada y obtengo los datos json y hago la inyeccion y se los paso a peliculasRespone
-        Call<PeliculaResponse> peliculaResponseCall = services.getPeliculas();
-        peliculaResponseCall.enqueue(new Callback<PeliculaResponse>() {
+        Call<PeliculaReservaResponse> reservaResponseCall = services.getReservas(SharedPreferences.getUsuario().getUsuario().getId());
+        reservaResponseCall.enqueue(new Callback<PeliculaReservaResponse>() {
             @Override
-            public void onResponse(Call<PeliculaResponse> call, Response<PeliculaResponse> response) {
-                if (response.isSuccessful()){
-                    PeliculaResponse peliculaResponse = response.body();
-                    List<Pelicula> listadoPeliculas = peliculaResponse.getPeliculas();
-                    peliculaAdapter.adiccionarPeliculas(listadoPeliculas);
-                }else {
-                    Log.e("ERRORRRRR!!!!!!!!!!!!!!","onResponeseeeeeeeeeeee: "+response.errorBody());
+            public void onResponse(Call<PeliculaReservaResponse> call, Response<PeliculaReservaResponse> response) {
+                if (response.isSuccessful()) {
+                    PeliculaReservaResponse reservaResponse = response.body();
+                    List<PeliculaReserva> peliculaReservas = reservaResponse.getReservas();
+                    reservaAdapter.adiccionarDatos(peliculaReservas);
+                } else {
+                    Log.e("ERRORRRRR!!!!!!!!!!!!!!", "onResponeseeeeeeeeeeee: " + response.errorBody());
                 }
             }
+
             @Override
-            public void onFailure(Call<PeliculaResponse> call, Throwable t) {
-                Log.e("ERRORRRRR!!!!!!!!!!!!!!","onFailureeeeeeeeeee: "+t.getMessage());
+            public void onFailure(Call<PeliculaReservaResponse> call, Throwable t) {
+                Log.e("ERRORRRRR!!!!!!!!!!!!!!", "onFailureeeeeeeeeee: " + t.getMessage());
+
             }
         });
     }

@@ -12,7 +12,7 @@
         android:layout_weight="0.7">
 
         <ImageView
-            android:id="@+id/iv_avatar_item_cartelera"
+            android:id="@+id/iv_avatar_item_reserva"
             android:layout_width="120dp"
             android:layout_height="150dp"
             android:layout_alignParentLeft="true"
@@ -26,61 +26,61 @@
         android:layout_weight="0.3">
 
         <TextView
-            android:id="@+id/tv_titulo_item_cartelera"
+            android:id="@+id/tv_titulo_item_reserva"
             android:layout_width="wrap_content"
-            android:paddingRight="15dp"
             android:layout_height="wrap_content"
+            android:text="PELICULA RESERVA"
             android:textSize="20dp"
             android:textColor="@color/colorMenuLabel"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:text="TITULO PELICULA"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp" />
 
         <TextView
-            android:id="@+id/tv_calificacion_item_cartelera"
+            android:id="@+id/tv_duracion_item_reserva"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:text="DURACION"
+            android:textColor="@color/colorMenuLabel"
             android:layout_marginTop="8dp"
-            android:text="CALIFICACION"
-            android:textColor="@color/colorMenuLabel"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_titulo_item_cartelera" />
-
-        <TextView
-            android:id="@+id/tv_duracion_item_cartelera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DURACION: XX:XX"
-            android:textColor="@color/colorMenuLabel"
-            app:layout_constraintLeft_toRightOf="@+id/tv_calificacion_item_cartelera"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_titulo_item_cartelera" />
-
-        <TextView
-            android:id="@+id/tv_idioma_item_cartelera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="IDIOMA"
-            android:textColor="@color/colorMenuLabel"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/tv_horario_item_cartelera"
+            app:layout_constraintTop_toBottomOf="@+id/tv_titulo_item_reserva"
             android:layout_marginLeft="8dp"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
-            android:id="@+id/tv_horario_item_cartelera"
+            android:id="@+id/tv_cantidad_item_reserva"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:text="CANTIDAD RESERVAS"
+            android:textColor="@color/colorMenuLabel"
             android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_duracion_item_reserva" />
+
+        <TextView
+            android:id="@+id/tv_horario_item_reserva"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="HORARIO"
             android:textColor="@color/colorMenuLabel"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+            android:layout_marginBottom="8dp" />
 
+        <TextView
+            android:id="@+id/tv_idioma_item_reservas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="ESPAÑOL"
+            android:textColor="@color/colorMenuLabel"
+            app:layout_constraintBottom_toTopOf="@+id/tv_horario_item_reserva"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_cantidad_item_reserva" />
+    </android.support.constraint.ConstraintLayout>
 </LinearLayout>

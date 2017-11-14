@@ -1,4 +1,4 @@
-package com.example.steinnxlabs.cineromeo30.retrofit;
+package com.example.steinnxlabs.cineromeo30.retrofit.responses;
 
 import com.example.steinnxlabs.cineromeo30.modelo.Pelicula;
 import com.google.gson.annotations.SerializedName;

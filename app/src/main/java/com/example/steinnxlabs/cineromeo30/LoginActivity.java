@@ -9,8 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.steinnxlabs.cineromeo30.modelo.SharedPreferences.SharedPreferences;
 import com.example.steinnxlabs.cineromeo30.retrofit.IServices;
-import com.example.steinnxlabs.cineromeo30.retrofit.UsuarioResponse;
+import com.example.steinnxlabs.cineromeo30.retrofit.responses.UsuarioResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -77,6 +78,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (values.getEstado()==1){
                         Toast.makeText(LoginActivity.this, "Nombre: " + values.getUsuario().getUsuario(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this,MenuPrincipalActivity.class);
+                        SharedPreferences preferences= new SharedPreferences();
+                        preferences.setUsuario(values);
                         startActivity(intent);
                         dialog.dismiss();
                     }else {

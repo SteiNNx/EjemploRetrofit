@@ -23,8 +23,20 @@
             android:name=".MenuPrincipalActivity"
             android:label="@string/title_activity_menu_principal"
             android:theme="@style/AppTheme" />
-        <activity android:name=".RegistrarseActivity" />
-        <activity android:name=".DetalleActivity"></activity>
+        <activity
+            android:name=".RegistrarseActivity"
+            android:parentActivityName=".LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LoginActivity" />
+        </activity>
+        <activity
+            android:name=".DetalleActivity"
+            android:parentActivityName=".MenuPrincipalActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MenuPrincipalActivity" />
+        </activity>
     </application>
 
 </manifest>

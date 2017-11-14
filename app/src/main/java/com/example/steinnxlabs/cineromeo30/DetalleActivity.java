@@ -7,14 +7,29 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.steinnxlabs.cineromeo30.modelo.PeliculaReserva;
+import com.example.steinnxlabs.cineromeo30.modelo.SharedPreferences.SharedPreferences;
+import com.example.steinnxlabs.cineromeo30.retrofit.IServices;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DetalleActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView iv_banner, iv_mas, iv_menos;
     private TextView tv_titulo, tv_duracion, tv_idioma, tv_resena, tv_cantidad, tv_precio;
     private Button btn_reservar;
+    private Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +64,7 @@ public class DetalleActivity extends AppCompatActivity implements View.OnClickLi
 
         iv_mas.setOnClickListener(this);
         iv_menos.setOnClickListener(this);
+        btn_reservar.setOnClickListener(this);
     }
 
     //metodo para toolbar editar
@@ -65,7 +81,41 @@ public class DetalleActivity extends AppCompatActivity implements View.OnClickLi
             cantidad(1);
         } else if (v.getId() == iv_menos.getId()) {
             cantidad(-1);
+        }else if (v.getId()==btn_reservar.getId()){
+            realizarReserva();
         }
+    }
+
+    private void realizarReserva() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor).build();
+        Gson gson = new GsonBuilder()
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://kailalkalil.esy.es/webServices/")
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        IServices services = retrofit.create(IServices.class);
+        PeliculaReserva reserva = new PeliculaReserva();
+        reserva.setIdUsuario(Integer.parseInt(SharedPreferences.getUsuario().getUsuario().getId()));
+        reserva.setIdPelicula(SharedPreferences.getPelicula().getIdPelicula());
+        reserva.setCantidadEntradas(Integer.parseInt(tv_cantidad.getText().toString()));
+        Call<PeliculaReserva> responseCall = services.crearReserva(reserva);
+        responseCall.enqueue(new Callback<PeliculaReserva>() {
+            @Override
+            public void onResponse(Call<PeliculaReserva> call, Response<PeliculaReserva> response) {
+                Toast.makeText(DetalleActivity.this, "Reserva Creada", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<PeliculaReserva> call, Throwable t) {
+
+            }
+        });
     }
 
     private void cantidad(int cantidad) {

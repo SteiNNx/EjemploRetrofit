@@ -17,10 +17,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.steinnxlabs.cineromeo30.fragments.CarteleraFragment;
+import com.example.steinnxlabs.cineromeo30.fragments.ReservasFragment;
 
 public class MenuPrincipalActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
-        ,CarteleraFragment.OnFragmentInteractionListener{
+        ,CarteleraFragment.OnFragmentInteractionListener
+        ,ReservasFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +86,7 @@ public class MenuPrincipalActivity extends AppCompatActivity
             addFragment(new CarteleraFragment());
 
         } else if (id == R.id.menu_mis_entradas) {
+            addFragment(new ReservasFragment());
 
         } else if (id == R.id.menu_ubicacion) {
 

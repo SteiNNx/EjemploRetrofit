@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.steinnxlabs.cineromeo30.DetalleActivity;
 import com.example.steinnxlabs.cineromeo30.R;
 import com.example.steinnxlabs.cineromeo30.modelo.Pelicula;
+import com.example.steinnxlabs.cineromeo30.modelo.SharedPreferences.SharedPreferences;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -56,6 +57,8 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
                 intent.putExtra("idioma",pelicula.getIdioma());
                 intent.putExtra("resena",pelicula.getResena());
                 intent.putExtra("id",pelicula.getIdPelicula());
+                SharedPreferences preferences = new SharedPreferences();
+                preferences.setPelicula(pelicula);
                 context.startActivity(intent);
             }
         });
